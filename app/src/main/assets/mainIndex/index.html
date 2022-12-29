@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>疫情通</title>
+    <script src="virusJson.js"></script>
+<!--    <script src="jquery.js"></script>-->
+<!--    <script id="eqJson" src="https://interface.sina.cn/news/wap/fymap2020_data.d.json" type="application/json"></script>-->
+    <style>
+        @font-face {
+            src: url("../Ali_font.ttf");
+            font-family: AliFont;
+            font-weight: 400;
+            font-style: normal;
+        }
+        html {
+            font-family: AliFont, sans-serif;
+            font-size: 14pt;
+            padding-left: 4pt;
+            padding-right: 4pt;
+            cursor: default;
+        }
+        p {
+            color: #000;
+        }
+        button {
+            font-family: AliFont, sans-serif;
+            font-size: 16pt;
+        }
+        .bg {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #F7F7F7;
+            z-index: -1;
+        }
+        .title-bar-box {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 34pt;
+            padding-top: 30pt;
+            background-color: rgba(245, 245, 245, .7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            z-index: 1;
+        }
+        .title-bar-t-box {
+            margin-left: 12pt;
+            display: flex;
+            flex-direction: column;
+            height: 40pt;
+            align-items: center;
+            /*background-color: #2A82E4;*/
+            justify-content: center;
+        }
+        .title-bar-line {
+            width: 30pt;
+            height: 2pt;
+            border-radius: 6px;
+            background-color: #2A82E4;
+        }
+        .title-bar-t {
+            margin-top: 0;
+            height: auto;
+            font-size: 16pt;
+            margin-bottom: 0;
+            text-align: center;
+        }
+        .title-bar-btn-box {
+            position: fixed;
+            right: 0;
+            width: 46pt;
+            background-color: transparent;
+            height: 32px;
+        }
+        .title-bar-btn {
+            position: absolute;
+            transition: .1s;
+            color: #2A82E4;
+            outline: none;
+            border: none;
+            border-radius: 6px;
+            background-color: transparent;
+            float: right;
+        }
+        .title-bar-btn:active {
+            transform: scale(.92);
+            background-color: rgba(128, 128, 128, .1);
+        }
+        .hello-box {
+            margin-top: 10pt;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 130pt;
+            border-radius: 8pt;
+            background-color: rgba(42, 130, 228, 0.1);
+            box-shadow: rgba(0, 0, 0, .06) 1px 1px 4px;
+        }
+        .hello-box-t-box {
+            display: flex;
+            width: 143pt;
+            flex-direction: column;
+            margin-top: -2pt;
+            margin-left: 0px;
+        }
+        .hello-box-t {
+            display: flex;
+            flex-direction: row;
+            font-size: 14pt;
+            width: 200pt;
+            margin-left: 16pt;
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+        .hello-box-ft {
+            margin-top: 8pt;
+            margin-left: 12pt;
+            width: 110pt;
+            text-align: center;
+            letter-spacing: 4px;
+            font-size: 14pt;
+            font-weight: 560;
+            color: #383838;
+            margin-bottom: 0;
+        }
+        .hello-box-btn {
+            transition: .1s;
+            margin-left: 16pt;
+            margin-top: 10pt;
+            font-size: 13pt;
+            border-radius: 80px;
+            background: linear-gradient(90deg, #38CDFF -20%, #1A66FF 100%);
+            filter: hue-rotate(0);
+            outline: none;
+            border: none;
+            width: 100pt;
+            height: 30pt;
+            color: #fff;
+            /*box-shadow: rgba(0, 0, 0, .2) 0 2px 4px;*/
+        }
+        .hello-box-btn:active {
+            transform: scale(.92);
+            filter: hue-rotate(8deg);
+            /*box-shadow: rgba(0, 0, 0, .2) 0 0 0;*/
+        }
+        .hello-box-svg-box {
+            position: absolute;
+            right: 16pt;
+            z-index: -1;
+        }
+        .hello-box-svg {
+            width: 154pt;
+            height: 154pt;
+        }
+        .card-box {
+            display: flex;
+            flex-direction: column;
+        }
+        .white-box {
+            margin-top: 46pt;
+        }
+        .card-list {
+            list-style: none;
+            margin-left: 0;
+            padding-left: 0;
+        }
+        .vd-box {
+            margin-top: 10pt;
+            padding-top: 2pt;
+            width: 100%;
+            height: 162pt;
+            background-color: #fff;
+            border-radius: 8pt;
+            box-shadow: rgba(0, 0, 0, .06) 1px 1px 4px;
+            transform: translateY(100vh);
+            transition: .3s;
+        }
+        .vd-box:nth-of-type(2n) {
+            transform: translateY(100vh);
+        }
+        .vd-box.show {
+            transform: translateY(0);
+        }
+        .vd-region-box {
+            display: flex;
+            height: 25pt;
+            flex-direction: row;
+            margin-left: 10pt;
+            justify-items: center;
+            align-items: center;
+        }
+        .vd-prov-box {
+            position: absolute;
+            right: 20pt;
+            display: flex;
+            background-color: rgba(42, 130, 228, 0.16);
+            width: 60px;
+            height: 20px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+        }
+        .vd-prov-t {
+            font-size: 10pt;
+            color: #2A82E4;
+        }
+        .br-line {
+            width: 96%;
+            height: 1px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, .04);
+        }
+        .vd-list-box {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: auto;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            /*background-color: #2A82E4;*/
+        }
+        .vd-list-s-d-box {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            height: 50pt;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4pt;
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-top: 10px;
+        }
+        .vd-list-s-d-t {
+            font-size: 12pt;
+            margin-bottom: 0;
+        }
+        .vd-list-s-d-d {
+            font-size: 12pt;
+            margin-top: 4pt;
+        }
+        .vd-other-box {
+            margin-top: 4px;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .vd-city-code {
+            /*position: absolute;*/
+            font-size: 10pt;
+            width: 50%;
+            margin-left: 3%;
+            color: rgba(166, 166, 166, 1);
+        }
+        .vd-time {
+            position: relative;
+            font-size: 10pt;
+            width: 50%;
+            text-align: right;
+            margin-right: 3%;
+            color: rgba(166, 166, 166, 1);
+        }
+        .nav-bar-box {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            height: 50pt;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, .9);
+            backdrop-filter: blur(40px);
+            z-index: 2;
+        }
+        .selection1-box {
+            padding-top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 50%;
+        }
+        .selection1-icon {
+            margin-bottom: 0;
+        }
+        .selection1-t {
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 10pt;
+            color: #2A82E4;
+        }
+        .v-line {
+            width: 1px;
+            height: 36pt;
+            background-color: rgba(230, 230, 230, 1);
+        }
+        .to-top-box {
+            transition: .1s;
+            display: flex;
+            position: absolute;
+            left: calc(50% - 20pt);
+            justify-content: center;
+            align-items: center;
+            top: calc(50% + 10px);
+            border-radius: 20px;
+            outline: none;
+            border: none;
+            /*animation: showIn .6s;*/
+            opacity: 0;
+            animation-fill-mode: both;
+            background-color: transparent;
+            /*background-color: rgba(245, 245, 245, .7);*/
+            /*backdrop-filter: blur(10px);*/
+            width: 40pt;
+        }
+        .to-top-box:active {
+            transform: scale(.9);
+            background-color: rgba(220, 220, 220, .7);
+        }
+        .to-top-icon {
+            transition: .3s;
+            width: 18px;
+            height: 18px;
+            fill: rgba(0, 0, 0, .6);
+            opacity: 1;
+        }
+        @keyframes showIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes showOut {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="title-bar-box">
+        <div class="title-bar-t-box">
+            <p class="title-bar-t">疫情通</p>
+            <div class="title-bar-line"></div>
+        </div>
+        <button class="to-top-box"  id="toTopBox" onclick="const backToTopTimer = setInterval(() => {let distTop = document.documentElement.scrollTop || document.body.scrollTop;if (distTop > 0) {isToTopClicked = true;document.documentElement.scrollTop = distTop - (distTop / 12)} else {isToTopClicked = false; clearInterval(backToTopTimer)}}, 1)">
+            <svg t="1671402748537" class="to-top-icon" viewBox="0 0 1040 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2717" width="64" height="64"><path d="M29.244045 756.726747c-22.213931 22.217001-22.213931 58.233286 0.002047 80.449263 22.213931 22.215978 58.235332 22.215978 80.447217 0.002047l0.002047-0.002047 0 0 359.679849-359.676779c23.509437-23.511483 61.629639-23.511483 85.142146 0L914.248364 837.231269c22.217001 22.217001 58.234309 22.217001 80.449263 0.002047 22.217001-22.215978 22.217001-58.235332 0-80.45131-0.01842-0.016373-0.035816-0.032746-0.056282-0.053212l-369.178177-369.177154c-62.695924-62.695924-164.348092-62.695924-227.046063 0L29.246091 756.726747l0 0L29.244045 756.726747z" p-id="2718"></path><path d="M967.066313 169.870876l-0.002047 0 0-0.002047L56.880475 169.868829l0 0.002047c-31.417547 0.002047-56.880475 25.469068-56.880475 56.886615 0 31.413454 25.462928 56.883545 56.880475 56.885592l0 0 910.184815 0 0 0 0.002047 0c31.4155 0 56.883545-25.470091 56.883545-56.885592C1023.949858 195.337897 998.482837 169.870876 967.066313 169.870876z" p-id="2719"></path></svg>
+        </button>
+        <div class="title-bar-btn-box">
+            <button class="title-bar-btn">筛选</button>
+        </div>
+    </div>
+    <div class="white-box"></div>
+    <div class="card-box">
+        <ul class="card-list" id="cardListUL">
+            <li><div class="hello-box">
+                <div class="hello-box-t-box">
+                    <p class="hello-box-t" id="helloBoxT">Hi ~</p>
+                    <p class="hello-box-ft">关注疫情动态实时监测防控</p>
+                    <button class="hello-box-btn" id="helloBoxBtn">查看详情</button>
+                </div>
+                <div class="hello-box-svg-box">
+                    <svg class="hello-box-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="153" height="153" viewBox="0 0 153 153" fill="none"><defs><rect id="path_0" x="0" y="0" width="153" height="153" /><linearGradient id="linear_0" x1="50%" y1="100.122278%" x2="51%" y2="-0.0579832828%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.1" /><stop offset="1" stop-color="#D9E9FF" stop-opacity="1" /></linearGradient><linearGradient id="linear_1" x1="50.08438710000001%" y1="100%" x2="51.08438710000001%" y2="0.006494738150000001%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.1" /><stop offset="0.14" stop-color="#F8FBFF" stop-opacity="0.27" /><stop offset="0.37" stop-color="#EDF5FF" stop-opacity="0.52" /><stop offset="0.58" stop-color="#E4F0FF" stop-opacity="0.73" /><stop offset="0.76" stop-color="#DEECFF" stop-opacity="0.88" /><stop offset="0.91" stop-color="#DAEAFF" stop-opacity="0.97" /><stop offset="1" stop-color="#D9E9FF" stop-opacity="1" /></linearGradient><linearGradient id="linear_2" x1="50.004589499999994%" y1="99.9311993%" x2="51.004589499999994%" y2="-0.0811277354%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.1" /><stop offset="0.09" stop-color="#FEFEFF" stop-opacity="0.13" /><stop offset="0.23" stop-color="#FBFCFF" stop-opacity="0.21" /><stop offset="0.4" stop-color="#F5F9FF" stop-opacity="0.33" /><stop offset="0.59" stop-color="#EEF5FF" stop-opacity="0.51" /><stop offset="0.79" stop-color="#E4EFFF" stop-opacity="0.74" /><stop offset="1" stop-color="#D9E9FF" stop-opacity="1" /></linearGradient><linearGradient id="linear_3" x1="50%" y1="100%" x2="51%" y2="0%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.1" /><stop offset="0.13" stop-color="#FBFDFF" stop-opacity="0.19" /><stop offset="0.41" stop-color="#F1F7FF" stop-opacity="0.43" /><stop offset="0.81" stop-color="#E1EEFF" stop-opacity="0.82" /><stop offset="1" stop-color="#D9E9FF" stop-opacity="1" /></linearGradient><linearGradient id="linear_4" x1="36.9834497%" y1="54.10230930000001%" x2="26.4788126%" y2="33.1348898%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0" /><stop offset="1" stop-color="#C1DDFD" stop-opacity="0.4" /></linearGradient><linearGradient id="linear_5" x1="0%" y1="95.8519161%" x2="169.600204%" y2="95.8519161%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#F6FBFF" stop-opacity="0.4" /><stop offset="1" stop-color="#ACD2FA" stop-opacity="0.4" /></linearGradient><linearGradient id="linear_6" x1="34.4993212%" y1="50%" x2="71.9746699%" y2="46.8956483%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#EDF5FF" stop-opacity="0.4" /><stop offset="1" stop-color="#3396FB" stop-opacity="0.4" /></linearGradient><linearGradient id="linear_7" x1="64.7498302%" y1="54.5931784%" x2="35.2501698%" y2="45.4068216%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#D9E9FF" stop-opacity="0.4" /><stop offset="0.31" stop-color="#DFECFF" stop-opacity="0.4" /><stop offset="0.73" stop-color="#F0F6FF" stop-opacity="0.4" /><stop offset="1" stop-color="#FFFFFF" stop-opacity="0.4" /></linearGradient><linearGradient id="linear_8" x1="65.6073002%" y1="56.76471759999999%" x2="34.3612335%" y2="43.2352824%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#D9E9FF" stop-opacity="1" /><stop offset="0.31" stop-color="#DFECFF" stop-opacity="1" /><stop offset="0.73" stop-color="#F0F6FF" stop-opacity="1" /><stop offset="1" stop-color="#FFFFFF" stop-opacity="1" /></linearGradient><linearGradient id="linear_9" x1="65.6073002%" y1="56.76471759999999%" x2="34.3612335%" y2="43.2352824%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#D9E9FF" stop-opacity="1" /><stop offset="0.31" stop-color="#DFECFF" stop-opacity="1" /><stop offset="0.73" stop-color="#F0F6FF" stop-opacity="1" /><stop offset="1" stop-color="#FFFFFF" stop-opacity="1" /></linearGradient><linearGradient id="linear_10" x1="6.98906497%" y1="52.12387509999999%" x2="120.30992199999999%" y2="50%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#F5FBFF" stop-opacity="0.4" /><stop offset="1" stop-color="#89BEF8" stop-opacity="0.4" /></linearGradient><linearGradient id="linear_11" x1="24.2813054%" y1="50%" x2="100%" y2="50%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#EDF7FF" stop-opacity="0.4" /><stop offset="1" stop-color="#3396FB" stop-opacity="0.4" /></linearGradient><linearGradient id="linear_12" x1="64.7498302%" y1="58.83383400000001%" x2="35.2501698%" y2="41.166166%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#D9E9FF" stop-opacity="0.4" /><stop offset="0.31" stop-color="#DFECFF" stop-opacity="0.4" /><stop offset="0.73" stop-color="#F0F6FF" stop-opacity="0.4" /><stop offset="1" stop-color="#FFFFFF" stop-opacity="0.4" /></linearGradient><linearGradient id="linear_13" x1="65.6073002%" y1="60.909611600000005%" x2="34.3612335%" y2="39.0903884%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#D9E9FF" stop-opacity="0.4" /><stop offset="0.31" stop-color="#DFECFF" stop-opacity="0.4" /><stop offset="0.73" stop-color="#F0F6FF" stop-opacity="0.4" /><stop offset="1" stop-color="#FFFFFF" stop-opacity="0.4" /></linearGradient><linearGradient id="linear_14" x1="65.6073002%" y1="58.6782812%" x2="34.3612335%" y2="41.3217188%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#D9E9FF" stop-opacity="0.4" /><stop offset="0.31" stop-color="#DFECFF" stop-opacity="0.4" /><stop offset="0.73" stop-color="#F0F6FF" stop-opacity="0.4" /><stop offset="1" stop-color="#FFFFFF" stop-opacity="0.4" /></linearGradient></defs><g opacity="1" transform="translate(0 0)  rotate(0 76.5 76.5)"><mask id="bg-mask-0" fill="white"><use xlink:href="#path_0"></use></mask><g mask="url(#bg-mask-0)" ><g opacity="1" transform="translate(0 0)  rotate(0 76.5 76.5)"><path id="路径 1" fill-rule="evenodd" style="fill:#FFFFFF" transform="translate(0 0)  rotate(0 76.5 76.5)" opacity="0" d="M0,153L153,153L153,0L0,0L0,153Z " /><path id="矩形" fill-rule="evenodd" style="fill:#F4F7F9" transform="translate(0 0)  rotate(0 76.5 76.5)" opacity="0" d="M0,153L153,153L153,0L0,0L0,153Z " /><path id="路径" fill-rule="evenodd" style="fill:#E4EFFF" transform="translate(26.4462890625 88.751953125)  rotate(0 2.16650390625 3.5859375)" opacity="1" d="M0,6.69L4.33,7.17L3.64,0L0,6.69Z " /><path id="路径" fill-rule="evenodd" style="fill:#F3F8FF" transform="translate(29.8828125 88.751953125)  rotate(0 2.2412109375 3.5859375)" opacity="1" d="M0.68,7.17L4.48,5.66L0,0L0.68,7.17Z " /><path id="路径" fill-rule="evenodd" style="fill:#E4EFFF" transform="translate(10.6083984375 90.544921875)  rotate(0 2.61474609375 4.55712890625)" opacity="1" d="M0,8.51L5.23,9.11L4.38,0L0,8.51Z " /><path id="路径" fill-rule="evenodd" style="fill:#F3F8FF" transform="translate(15.0908203125 90.544921875)  rotate(0 2.76416015625 4.55712890625)" opacity="1" d="M0.85,9.11L5.53,7.2L0,0L0.85,9.11Z " /><path id="路径" fill-rule="evenodd" style="fill:#E4EFFF" transform="translate(14.044921875 84.26953125)  rotate(0 4.78125 7.54541015625)" opacity="1" d="M0,14.15L9.56,15.09L8.14,0L0,14.15Z " /><path id="路径" fill-rule="evenodd" style="fill:#F3F8FF" transform="translate(21.9638671875 84.26953125)  rotate(0 5.00537109375 7.54541015625)" opacity="1" d="M1.42,15.09L10.01,11.86L0,0L1.42,15.09Z " /><path id="路径" fill-rule="evenodd" fill="url(#linear_0)" transform="translate(4.3330078125 46.01953125258635)  rotate(0 11.87841796875 6.4248047180719405)" opacity="1" d="M7.99,1.23C5.67,1.2 3.64,2.8 3.12,5.08C1.33,5.48 0.05,7.05 0,8.89C0.07,11.13 1.92,12.9 4.14,12.85L19.62,12.85C21.84,12.9 23.69,11.14 23.76,8.89C23.71,7.05 22.43,5.49 20.65,5.08C20.1,2.09 17.48,-0.05 14.47,0C12.86,-0.01 11.3,0.6 10.11,1.7C9.45,1.39 8.72,1.23 7.99,1.23Z " /><path id="路径" fill-rule="evenodd" fill="url(#linear_1)" transform="translate(96.22265625 26.14746092217036)  rotate(0 11.056640651402644 5.528320320164843)" opacity="1" d="M22.11,7.62C22.15,5.82 20.59,4.34 18.63,4.2C17.83,2.94 16.47,2.15 14.99,2.1C14.13,0.77 12.65,-0.03 11.08,0C9.81,-0.01 8.6,0.49 7.71,1.4C7.3,1.26 6.88,1.2 6.45,1.2C4.47,1.2 2.83,2.59 2.66,4.34C1.15,4.71 0.06,6.05 0,7.62C0,9.51 1.71,11.06 3.79,11.06L18.33,11.06C20.43,11.06 22.11,9.51 22.11,7.62Z " /><path id="路径" fill-rule="evenodd" fill="url(#linear_2)" transform="translate(107.2792969305489 17.929687468741896)  rotate(0 20.320312484749387 12.177253805600444)" opacity="1" d="M0.1,17.15C0.73,21.29 4.3,24.35 8.49,24.35L32.13,24.35C36.35,24.36 39.93,21.28 40.55,17.11C41.17,12.95 38.63,8.96 34.6,7.75L34.61,7.73C33.19,4.81 30.22,2.95 26.97,2.93C25.16,2.94 23.4,3.53 21.94,4.61C20.22,1.24 16.46,-0.57 12.75,0.16C9.03,0.9 6.25,4 5.94,7.77C1.94,9.03 -0.54,13.02 0.1,17.15Z " /><path id="椭圆形" fill-rule="evenodd" fill="url(#linear_3)" transform="translate(0 86.66015625)  rotate(0 76.5 24.205078125)" opacity="1" d="M76.5,0C34.25,0 0,10.84 0,24.21C0,37.57 34.25,48.41 76.5,48.41C118.75,48.41 153,37.57 153,24.21C153,10.84 118.75,0 76.5,0Z " /><g opacity="1" transform="translate(43.389142034361576 45.43784437888473)  rotate(0 44.35817854238953 45.73896264210058)"><path id="路径" fill-rule="evenodd" fill="url(#linear_4)" transform="translate(15.259643926575947 46.96062005177936)  rotate(0 36.72835657910156 22.258652616210938)" opacity="0.385356358" d="M33.58,1.21L0,0L22.79,44.52L73.46,28.21L44.65,7.8L33.58,1.21Z " /><path id="路径" fill-rule="evenodd" fill="url(#linear_5)" transform="translate(0 0)  rotate(0 6.691500753365935 5.630093228575196)" opacity="1" d="M7.63,0C-0.33,0 0,5.52 0,5.52L0,11.26L13.08,11.26C13.08,11.26 15.32,0 7.63,0Z " /><path id="路径" fill-rule="evenodd" fill="url(#linear_6)" transform="translate(7.328786533118894 0)  rotate(0 16.410108967417692 24.753424445323244)" opacity="1" d="M5.02,7.1C5.02,13.58 5.02,44.66 5.02,44.66C5.02,44.66 4.91,49.51 10.14,49.51C15.36,49.51 25.19,49.51 25.19,49.51L32.81,27.02L32.81,8.67C32.81,8.67 33.39,0 25.57,0C18.57,0 0,0 0,0C0,0 5.02,0.61 5.02,7.1Z " /><path id="矩形" fill-rule="evenodd" fill="url(#linear_7)" transform="translate(16.829009451966563 5.721177839572313)  rotate(0 9.279861486328125 1.6686061888183594)" opacity="1" d="M1.67,3.34L16.89,3.34C17.33,3.34 17.76,3.16 18.07,2.85C18.38,2.54 18.56,2.11 18.56,1.67L18.56,1.67C18.56,1.23 18.38,0.8 18.07,0.49C17.76,0.18 17.33,0 16.89,0L1.67,0C1.23,0 0.8,0.18 0.49,0.49C0.18,0.8 0,1.23 0,1.67L0,1.67C0,2.11 0.18,2.54 0.49,2.85C0.8,3.16 1.23,3.34 1.67,3.34Z " /><path id="矩形" fill-rule="evenodd" fill="url(#linear_8)" transform="translate(16.829009451966563 12.325551948263687)  rotate(0 6.676794163476562 1.6686061888183594)" opacity="1" d="M1.67,3.34L11.68,3.34C12.12,3.34 12.55,3.16 12.86,2.85C13.17,2.54 13.35,2.11 13.35,1.67L13.35,1.67C13.35,1.23 13.17,0.8 12.86,0.49C12.55,0.18 12.12,0 11.68,0L1.67,0C1.23,0 0.8,0.18 0.49,0.49C0.18,0.8 0,1.23 0,1.67L0,1.67C0,2.11 0.18,2.54 0.49,2.85C0.8,3.16 1.23,3.34 1.67,3.34Z " /><path id="矩形" fill-rule="evenodd" fill="url(#linear_9)" transform="translate(16.829009451966563 18.92992604201372)  rotate(0 6.676794163476562 1.6686061888183594)" opacity="1" d="M1.67,3.34L11.68,3.34C12.12,3.34 12.55,3.16 12.86,2.85C13.17,2.54 13.35,2.11 13.35,1.67L13.35,1.67C13.35,1.23 13.17,0.8 12.86,0.49C12.55,0.18 12.12,0 11.68,0L1.67,0C1.23,0 0.8,0.18 0.49,0.49C0.18,0.8 0,1.23 0,1.67L0,1.67C0,2.11 0.18,2.54 0.49,2.85C0.8,3.16 1.23,3.34 1.67,3.34Z " /><path id="路径" fill-rule="evenodd" fill="url(#linear_10)" transform="translate(19.437216439271253 26.198653179708998)  rotate(0 11.630465630859373 11.65409785546875)" opacity="1" d="M23.26,23.31L20.69,4.56C20.69,4.56 17.45,0 11.08,0C3.9,0 4.25,6.79 4.25,7.14C4.25,7.49 4.25,18.84 4.25,18.84C4.25,18.84 4.2,23.31 0,23.31L23.26,23.31Z " /><path id="路径" fill-rule="evenodd" fill="url(#linear_11)" transform="translate(30.589717690247817 26.198144160238797)  rotate(0 14.657573170898434 14.283089442352301)" opacity="1" d="M29.32,9.35C29.32,-0.23 19.97,0 19.97,0C19.97,0 9.59,0 0,0C8.45,0 7.93,7.48 7.93,7.48L7.93,28.57L29.32,28.57C29.32,28.57 29.32,18.93 29.32,9.35Z " /><path id="矩形" fill-rule="evenodd" fill="url(#linear_12)" transform="translate(42.6390837244275 32.81326198732613)  rotate(0 6.691500758056641 1.6686061888183594)" opacity="1" d="M1.67,3.34L11.71,3.34C12.15,3.34 12.58,3.16 12.89,2.85C13.2,2.54 13.38,2.11 13.38,1.67L13.38,1.67C13.38,1.23 13.2,0.8 12.89,0.49C12.58,0.18 12.15,0 11.71,0L1.67,0C1.23,0 0.8,0.18 0.49,0.49C0.18,0.8 0,1.23 0,1.67L0,1.67C0,2.11 0.18,2.54 0.49,2.85C0.8,3.16 1.23,3.34 1.67,3.34Z " /><path id="矩形" fill-rule="evenodd" fill="url(#linear_13)" transform="translate(42.6390837244275 39.41763593166216)  rotate(0 5.257607737939453 1.6686061888183594)" opacity="1" d="M1.67,3.34L8.85,3.34C9.29,3.34 9.72,3.16 10.03,2.85C10.34,2.54 10.52,2.11 10.52,1.67L10.52,1.67C10.52,1.23 10.34,0.8 10.03,0.49C9.72,0.18 9.29,0 8.85,0L1.67,0C1.23,0 0.8,0.18 0.49,0.49C0.18,0.8 0,1.23 0,1.67L0,1.67C0,2.11 0.18,2.54 0.49,2.85C0.8,3.16 1.23,3.34 1.67,3.34Z " /><path id="矩形" fill-rule="evenodd" fill="url(#linear_14)" transform="translate(42.6390837244275 46.02201002541213)  rotate(0 5.8948935205078135 1.6686061888183594)" opacity="1" d="M1.67,3.34L10.12,3.34C10.56,3.34 10.99,3.16 11.3,2.85C11.61,2.54 11.79,2.11 11.79,1.67L11.79,1.67C11.79,1.23 11.61,0.8 11.3,0.49C10.99,0.18 10.56,0 10.12,0L1.67,0C1.23,0 0.8,0.18 0.49,0.49C0.18,0.8 0,1.23 0,1.67L0,1.67C0,2.11 0.18,2.54 0.49,2.85C0.8,3.16 1.23,3.34 1.67,3.34Z " /></g><path id="路径" fill-rule="evenodd" style="fill:#E4EFFF" transform="translate(129.2431640625 90.544921875)  rotate(0 3.06298828125 4.78125)" opacity="1" d="M0,8L5.4,9.56L6.13,0L0,8Z " /><path id="路径" fill-rule="evenodd" style="fill:#F3F8FF" transform="translate(134.47265625 90.544921875)  rotate(0 2.61474609375 4.78125)" opacity="1" d="M0,9.56L5.23,8.43L0.72,0L0,9.56Z " /></g></g></g></svg>
+                </div>
+            </div></li>
+<!--            <li><div class="vd-box">-->
+<!--                    <div class="vd-region-box">-->
+<!--                        <p class="vd-region-t" id="vdRegionT"></p>-->
+<!--                        <div class="vd-prov-box">-->
+<!--                            <p class="vd-prov-t" id="vdProvT"></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="br-line"></div>-->
+<!--                    <div class="vd-list-box">-->
+<!--                        <div class="vd-list-s-d-box" style="background-color: rgba(255, 87, 51, 0.2)">-->
+<!--                            <p class="vd-list-s-d-t" id="vdListSDT1" style="color: rgba(255, 87, 51, 1)"></p>-->
+<!--                            <p class="vd-list-s-d-d" id="vdListSDD1" style="color: rgba(255, 87, 51, 1)"></p>-->
+<!--                        </div>-->
+<!--                        <div class="vd-list-s-d-box" style="background-color: rgba(42, 130, 228, 0.2)">-->
+<!--                            <p class="vd-list-s-d-t" id="vdListSDT2" style="color: rgba(42, 130, 228, 1)"></p>-->
+<!--                            <p class="vd-list-s-d-d" id="vdListSDD2" style="color: rgba(42, 130, 228, 1)"></p>-->
+<!--                        </div>-->
+<!--                        <div class="vd-list-s-d-box" style="background-color: rgba(230, 230, 230, 1)">-->
+<!--                            <p class="vd-list-s-d-t" id="vdListSDT3"></p>-->
+<!--                            <p class="vd-list-s-d-d" id="vdListSDD3"></p>-->
+<!--                        </div>-->
+<!--                        <div class="vd-list-s-d-box"  style="background-color: rgba(255, 87, 51, 0.1)">-->
+<!--                            <p class="vd-list-s-d-t" id="vdListSDT4" style="color: rgba(255, 87, 51, 1)"></p>-->
+<!--                            <p class="vd-list-s-d-d" id="vdListSDD4" style="color: rgba(255, 87, 51, 1)"></p>-->
+<!--                        </div>-->
+<!--                        <div class="vd-list-s-d-box" style="background-color: rgba(121, 72, 234, 0.1)">-->
+<!--                            <p class="vd-list-s-d-t" id="vdListSDT5" style="color: rgba(121, 72, 234, 1)"></p>-->
+<!--                            <p class="vd-list-s-d-d" id="vdListSDD5" style="color: rgba(121, 72, 234, 1)"></p>-->
+<!--                        </div>-->
+<!--                        <div class="vd-list-s-d-box" style="background-color: rgba(0, 186, 173, 0.2)">-->
+<!--                            <p class="vd-list-s-d-t" id="vdListSDT6" style="color: rgba(0, 186, 173, 1)"></p>-->
+<!--                            <p class="vd-list-s-d-d" id="vdListSDD6" style="color: rgba(0, 186, 173, 1)"></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="vd-other-box">-->
+<!--                        <p class="vd-city-code"></p>-->
+<!--                        <p class="vd-time"></p>-->
+<!--                    </div>-->
+<!--                </div></li>-->
+        </ul>
+    </div>
+    <div class="white-box"></div>
+    <div class="nav-bar-box">
+        <div class="selection1-box">
+            <svg class="selection1-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24" fill="none"><defs><rect id="path_0" x="0" y="0" width="24" height="24.000000000000018" /></defs><g opacity="1" transform="translate(0 0)  rotate(0 12 12.000000000000009)"><mask id="bg-mask-0" fill="white"><use xlink:href="#path_0"></use></mask><g mask="url(#bg-mask-0)" ><path id="分组 1" fill-rule="evenodd" style="fill:#2A82E4" transform="translate(0 0)  rotate(0 12 12.000000000000009)" opacity="1" d="M18.09 18.82C18.69 18.22 19.21 17.62 19.66 16.87L22.05 17.62C22.5 17.77 22.88 17.54 23.03 17.17L24 14.32C24 14.09 24 13.87 23.93 13.72C23.85 13.57 23.7 13.42 23.48 13.34L21.08 12.59C21.16 11.77 21.08 10.94 20.93 10.11L23.18 8.99C23.33 8.91 23.48 8.76 23.55 8.54C23.55 8.31 23.55 8.09 23.48 7.94L22.13 5.24C22.05 5.09 21.9 4.94 21.68 4.86C21.45 4.86 21.23 4.86 21.08 4.94L18.91 6.06C18.31 5.39 17.64 4.78 16.89 4.26L17.64 2.01C17.79 1.56 17.56 1.18 17.19 1.03L14.34 0.06C14.12 -0.02 13.97 -0.02 13.67 0.06C13.52 0.13 13.37 0.28 13.3 0.51L12.62 2.68C11.72 2.61 10.83 2.68 9.93 2.83L8.88 0.73C8.73 0.36 8.28 0.21 7.91 0.36L5.21 1.71C5.06 1.78 4.91 1.93 4.84 2.16C4.84 2.38 4.84 2.61 4.91 2.76L5.89 4.71C5.14 5.31 4.46 6.06 3.94 6.89L1.99 6.29C1.77 6.29 1.54 6.29 1.39 6.36C1.24 6.44 1.09 6.59 1.02 6.81L0.05 9.74C-0.1 10.19 0.12 10.56 0.5 10.71L2.44 11.39C2.44 12.37 2.52 13.34 2.74 14.32L0.8 15.29C0.65 15.37 0.5 15.52 0.42 15.74C0.42 15.97 0.42 16.19 0.5 16.34L1.84 19.05C1.99 19.42 2.44 19.5 2.82 19.35L4.84 18.3C5.51 18.97 6.18 19.57 7.01 20.02L6.33 22.12C6.33 22.35 6.33 22.57 6.41 22.72C6.48 22.87 6.63 23.02 6.86 23.1L9.78 24L10 24C10.3 24 10.6 23.77 10.68 23.47L11.42 21.3C12.32 21.3 13.22 21.22 14.12 21L15.24 23.1C15.39 23.47 15.84 23.55 16.22 23.4L18.91 22.05C19.06 21.97 19.21 21.82 19.28 21.6C19.28 21.37 19.28 21.15 19.21 21L18.09 18.82Z M15.9182 2.08747L14.4982 1.55747L13.8982 3.73747C13.7482 4.10747 13.4482 4.33747 13.0682 4.25747C11.9482 4.03747 10.8282 4.10747 9.77823 4.40747C9.40823 4.48747 9.10823 4.33747 8.95823 4.03747L7.97823 2.08747L6.63823 2.75747L7.60823 4.63747C7.75823 4.93747 7.67823 5.38747 7.37823 5.60747C6.40823 6.28747 5.58823 7.18747 5.05823 8.23747C4.90823 8.53747 4.53823 8.68747 4.16823 8.61747L2.36823 8.01747L1.91823 9.51747L3.71823 10.1175C4.08823 10.2675 4.23823 10.5675 4.23823 10.9375C4.08823 12.1375 4.16823 13.3375 4.53823 14.4675C4.68823 14.8475 4.46823 15.2175 4.16823 15.3675L2.36823 16.2675L3.03823 17.6175L4.90823 16.6475C5.20823 16.4975 5.58823 16.5675 5.80823 16.8675C6.55823 17.7675 7.37823 18.4475 8.42823 18.9675C8.72823 19.1175 8.95823 19.4975 8.80823 19.8675L7.97823 21.8975L9.47823 22.3475L10.1482 20.3175C10.2282 20.0175 10.5982 19.7975 10.9782 19.7975C12.0982 19.9475 13.2182 19.7975 14.2682 19.4175C14.6482 19.2675 15.0182 19.4175 15.1682 19.7975L16.1382 21.7475L17.4882 21.0775L16.5182 18.9675C16.3682 18.6675 16.4382 18.2975 16.7382 18.0675C17.5582 17.3975 18.2382 16.5675 18.7582 15.5975C18.9082 15.2975 19.2882 15.1475 19.6582 15.2175L21.9082 15.9675L22.3482 14.5475L20.0282 13.7875C19.6582 13.7175 19.4382 13.3375 19.5082 12.9675C19.6582 11.9175 19.5882 10.8675 19.2882 9.81747C19.2082 9.43747 19.3582 9.13747 19.6582 8.91747L21.7582 7.85747L21.0782 6.50747L19.0582 7.55747C18.7582 7.70747 18.3082 7.63747 18.0882 7.33747C17.4082 6.43747 16.5882 5.68747 15.6182 5.08747C15.3182 4.93747 15.1682 4.55747 15.2382 4.18747L15.9182 2.08747Z " /><path id="分组 2" fill-rule="evenodd" style="fill:#2A82E4" transform="translate(7.457385395227291 5.310398733040074)  rotate(0 5.23974217822048 5.0289288608290805)" opacity="1" d="M8.23385 2.55C8.23385 1.13 7.11385 0 5.69385 0C4.26385 0 3.14385 1.13 3.14385 2.55C3.14385 3.98 4.26385 5.1 5.69385 5.1C7.03385 5.1 8.23385 3.98 8.23385 2.55Z M4.64091 2.62623C4.64091 3.22623 5.09091 3.67623 5.69091 3.67623C6.29091 3.67623 6.74091 3.22623 6.74091 2.62623C6.66091 2.02623 6.21091 1.57623 5.69091 1.57623C5.09091 1.57623 4.64091 2.02623 4.64091 2.62623Z M10.4765 7.72963C10.4765 6.75963 9.65652 5.92963 8.68652 5.92963C7.70652 5.92963 6.88652 6.75963 6.88652 7.72963C6.88652 8.70963 7.70652 9.52963 8.68652 9.52963C9.65652 9.52963 10.4765 8.77963 10.4765 7.72963Z M8.38359 7.80586C8.38359 7.95586 8.53359 8.10586 8.68359 8.10586C8.83359 8.10586 8.98359 7.95586 8.98359 7.80586C8.98359 7.65586 8.83359 7.50586 8.68359 7.50586C8.53359 7.50586 8.38359 7.65586 8.38359 7.80586Z M2.84 8.63563C2.84 7.80563 2.25 7.20563 1.42 7.20563C0.6 7.20563 0 7.88563 0 8.63563C0 9.45563 0.67 10.0556 1.42 10.0556C2.17 10.0556 2.84 9.45563 2.84 8.63563Z M1.34736 8.63668C1.34736 8.78668 1.56736 8.78668 1.56736 8.63668C1.49736 8.63668 1.49736 8.55668 1.41736 8.55668C1.34736 8.55668 1.34736 8.63668 1.34736 8.63668Z " /></g></g></svg>
+            <p class="selection1-t">实时疫情</p>
+        </div>
+        <div class="v-line"></div>
+        <div class="selection1-box">
+            <svg  t="1671362482163" class="selection1-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2717" width="30" height="30"><path d="M913.94086 431.828053c-4.878101-25.783223-20.693298-42.455951-40.947598-42.455951l-3.511987 0c-54.731532 0-99.248422-44.515866-99.248422-99.262748 0-17.294898 8.299013-37.015032 8.619308-37.798884 10.097986-22.722514 2.349511-50.567699-18.078751-64.859193l-102.701057-57.183374-1.509377-0.738827c-20.545942-8.909927-48.667419-3.207042-63.987337 12.753465-11.086499 11.434423-49.306986 44.037982-78.471213 44.037982-29.543873 0-67.849294-33.257451-78.992075-44.908816-15.293311-16.077164-43.12417-22.112624-63.902402-13.218046l-106.35733 58.272171-1.596358 1.016143c-20.430308 14.234189-28.207435 42.078351-18.165732 64.713884 0.346901 0.827855 8.676613 20.387329 8.676613 37.914518 0 54.746882-44.51689 99.262748-99.247398 99.262748l-4.149507 0c-19.617803 0-35.434024 16.671705-40.309054 42.455951-0.363274 1.814322-8.590656 45.446052-8.590656 80.429821 0 34.938744 8.227382 78.555124 8.590656 80.355119 4.875031 25.799596 20.691251 42.48665 40.946574 42.48665l3.511987 0c54.730509 0 99.247398 44.51689 99.247398 99.247398 0 17.411555-8.328689 37.058011-8.647961 37.812187-10.069333 22.766516-2.349511 50.567699 18.021445 64.787562l100.756775 56.531528 1.538029 0.696872c20.836561 9.17087 49.01432 3.191692 64.250326-13.464663 14.07353-15.207353 52.207036-46.782489 80.20981-46.782489 30.354332 0 69.445652 35.347043 80.706113 47.76691 10.387581 11.376095 26.349111 18.22713 42.687218 18.22713 7.631818 0 14.857383-1.511423 21.474081-4.354168l104.4724-57.574277 1.538029-0.989537c20.428262-14.276145 28.206412-42.077328 18.138102-64.727187-0.348947-0.842181-8.677637-20.402679-8.677637-37.928844 0-54.730509 44.51689-99.247398 99.248422-99.247398l4.093225 0c19.644409 0 35.488259-16.687054 40.365336-42.48665 0.347924-1.799996 8.588609-45.416376 8.588609-80.355119C922.529469 477.274104 914.288784 433.642374 913.94086 431.828053M862.982258 512.257873c0 22.605857-4.498454 51.655474-6.559393 63.785745-82.09781 6.732331-145.738245 75.335802-145.738245 158.303422 0 23.419386 7.430226 45.851281 11.377118 56.169277l-89.12076 49.216935c-4.38282-4.584412-17.325597-17.644869-34.939767-30.762631-30.93557-22.925129-60.595077-34.635845-88.106664-34.635845-27.278273 0-56.703443 11.420097-87.493703 34.05563-17.528212 12.768815-30.296003 25.479301-34.765805 30.18037l-85.724407-47.997154c4.179183-10.839883 11.405771-32.982182 11.405771-56.226582 0-82.96762-63.640436-151.571091-145.70857-158.303422-2.089591-12.130272-6.588045-41.178865-6.588045-63.785745 0-22.650883 4.498454-51.713802 6.588045-63.844074 82.068134-6.718005 145.70857-75.335802 145.70857-158.303422 0-23.288402-7.429203-45.792952-11.376095-56.095599l91.325985-50.190099c3.975545 3.976568 17.005302 16.730033 34.82311 29.411867 30.355355 21.663392 59.260685 32.633235 86.016049 32.633235 26.494421 0 55.19509-10.766205 85.346807-32.009018 17.963117-12.623505 30.964222-25.203008 34.736129-28.757974l87.900979 48.825009c-3.975545 10.244318-11.405771 32.676214-11.405771 56.18258 0 82.96762 63.640436 151.585417 145.738245 158.303422C858.483804 460.5717 862.982258 489.7523 862.982258 512.257873" fill="#A6A6A6" p-id="2718"></path><path d="M510.215866 365.633445c-80.530105 0-146.056494 65.527412-146.056494 146.057517 0 80.543408 65.527412 146.043191 146.056494 146.043191 80.530105 0 146.057517-65.499783 146.057517-146.043191C656.273383 431.160857 590.74597 365.633445 510.215866 365.633445M596.725148 511.690962c0 47.693232-38.799678 86.491887-86.509283 86.491887-47.708582 0-86.479607-38.798655-86.479607-86.491887 0-47.665603 38.771025-86.479607 86.479607-86.479607C557.925471 425.212378 596.725148 464.025359 596.725148 511.690962" fill="#A6A6A6" p-id="2719"></path></svg>
+            <p class="selection1-t" style="color: #A6A6A6">设置</p>
+        </div>
+    </div>
+</body>
+<script src="style.js"></script>
+<script src="web.js"></script>
+</html>
