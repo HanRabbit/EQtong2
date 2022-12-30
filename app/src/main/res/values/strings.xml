@@ -1,3 +1,7 @@
 <resources>
+<<<<<<< HEAD
     <string name="app_name">EQtong2</string>
+=======
+    <string name="app_name">疫情通</string>
+>>>>>>> master
 </resources>

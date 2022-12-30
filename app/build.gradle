@@ -10,10 +10,17 @@ android {
         applicationId "com.hanstudio.eqtong2"
         minSdk 28
         targetSdk 32
+<<<<<<< HEAD
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+=======
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionCode 2
+        versionName '2.0'
+>>>>>>> master
     }
 
     buildTypes {
