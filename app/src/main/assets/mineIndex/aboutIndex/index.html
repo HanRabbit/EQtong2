@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>关于</title>
+  <style>
+    @font-face {
+      src: url("../../Ali_font.ttf");
+      font-family: AliFont;
+      font-weight: 400;
+      font-style: normal;
+    }
+    html {
+      font-family: AliFont, sans-serif;
+      font-size: 14pt;
+      padding-left: 0;
+      padding-right: 0;
+      cursor: default;
+      /*max-width: 500px;*/
+      margin: 0 auto;
+      /* overflow-x: hidden; */
+    }
+    p {
+      color: #000;
+    }
+    button {
+      font-family: AliFont, sans-serif;
+      font-size: 16pt;
+    }
+    .bg {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #F7F7F7;
+      z-index: -1;
+    }
+    .title-bar-box {
+      /*transition: .04s;*/
+      transition-delay: .06s;
+      /*max-width: 500px;*/
+      position: fixed;
+      /*margin-left: fill;*/
+      left: 0;
+      top: 0;
+      width: 100%;
+      /*right: 20px;*/
+      height: 34pt;
+      padding-top: 30pt;
+      background-color: rgba(247, 247, 247, .8);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      z-index: 1;
+    }
+    .title-bar-svg {
+      transition: .08s;
+      margin-left: 10px;
+      width: 24pt;
+      height: 28pt;
+      /*background-color: #2A82E4;*/
+      border-radius: 6px;
+    }
+    .title-bar-svg:active {
+      transform: scale(.9);
+      background-color: rgba(220, 220, 220, .7);
+    }
+    .about-box {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      /*background-color: #2A82E4;*/
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /*justify-content: center;*/
+    }
+    .logo-show-box {
+      margin-top: 80pt;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .logo-t {
+      width: 100%;
+      margin-left: 0;
+      text-align: center;
+      font-size: 18pt;
+      margin-top: 12pt;
+      margin-bottom: 4px;
+      color: #000000;
+    }
+    .logo-ft {
+      width: 100%;
+      margin-left: 0;
+      text-align: center;
+      font-size: 10pt;
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #A6A6A6;
+    }
+    .svg-logo {
+      width: 70pt;
+      height: 70pt;
+    }
+    /*.f-line {*/
+    /*  width: 80%;*/
+    /*  height: 1px;*/
+    /*  background-color: rgba(0, 0, 0, .08);*/
+    /*}*/
+    .license-t {
+      margin-top: 20px;
+      line-height: 34px;
+      width: 76%;
+      font-size: 12pt;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="title-bar-box" id="titleBarBox">
+      <svg t="1672297696470" class="title-bar-svg" id="backBtn" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2842" width="64" height="64"><path d="M631.04 161.941333a42.666667 42.666667 0 0 1 63.061333 57.386667l-2.474666 2.730667-289.962667 292.245333 289.706667 287.402667a42.666667 42.666667 0 0 1 2.730666 57.6l-2.474666 2.752a42.666667 42.666667 0 0 1-57.6 2.709333l-2.752-2.474667-320-317.44a42.666667 42.666667 0 0 1-2.709334-57.6l2.474667-2.752 320-322.56z" fill="#515151" p-id="2843"></path></svg>
+  </div>
+  <div class="about-box">
+    <div class="logo-show-box">
+      <svg class="svg-logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="108" height="108" viewBox="0 0 108 108" fill="none"><defs><path id="path_0" transform="translate(0 0) rotate(0 54 54)" d="M12,108L96,108C102.63,108 108,102.63 108,96L108,12C108,5.37 102.63,0 96,0L12,0C5.37,0 0,5.37 0,12L0,96C0,102.63 5.37,108 12,108Z" /><linearGradient id="linear_0" x1="0%" y1="50%" x2="105.779%" y2="50%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#000000" stop-opacity="0.135" /><stop offset="1" stop-color="#000000" stop-opacity="0" /></linearGradient><rect id="path_1" x="0" y="0" width="69.54" height="69.54" /></defs><g opacity="1" transform="translate(0 0)  rotate(0 54 54)"><mask id="mask-0" fill="white"><use xlink:href="#path_0"></use></mask><g mask="url(#mask-0)"><path id="矩形 1" fill-rule="evenodd" style="fill:#FFFFFF" transform="translate(0 0)  rotate(0 54 54)" opacity="1" d="M12,108L96,108C102.63,108 108,102.63 108,96L108,12C108,5.37 102.63,0 96,0L12,0C5.37,0 0,5.37 0,12L0,96C0,102.63 5.37,108 12,108Z " /></g><g mask="url(#mask-0)"><path id="矩形 1" fill-rule="evenodd" fill="url(#linear_0)" transform="translate(47.51328151719255 44.118275879353575)  rotate(31.4569180549785 46.31061631716162 33.42659644711733)" opacity="1" d="M0,66.85L92.62,66.85L92.62,0L0,0L0,66.85Z " /></g><g mask="url(#mask-0)"><g opacity="1" transform="translate(19.2 19.199999999999996)  rotate(0 34.77 34.77)"><mask id="bg-mask-1" fill="white"><use xlink:href="#path_1"></use></mask><g mask="url(#bg-mask-1)" ><path id="路径 1" fill-rule="evenodd" style="fill:#4B8AFF" transform="translate(0 0)  rotate(0 34.77 34.77)" opacity="1" d="M46.5,8.37C43.6,7.09 40.35,6.16 37.11,5.93L37.11,2.79C37.11,1.28 35.83,0 34.32,0C32.82,0 31.54,1.28 31.54,2.79L31.54,5.93C28.53,6.28 25.51,7.09 22.73,8.37L20.87,5.12C20.41,4.19 19.48,3.6 18.44,3.6C17.51,3.6 16.47,4.19 16,5.12C15.54,6.05 15.54,7.21 16.12,8.02L18.09,11.4C15.42,13.26 12.99,15.7 11.13,18.37L8,16.51C7.07,15.93 6.03,15.93 5.1,16.4C4.17,16.86 3.59,17.79 3.59,18.84C3.59,19.89 4.17,20.82 5.1,21.28L8.23,23.14C6.96,25.93 6.15,28.96 5.8,32.1L2.67,32.1C1.16,32.1 0,33.37 0,34.89C0,36.4 1.16,37.68 2.67,37.79L5.91,37.79C6.15,40.7 6.84,43.38 7.88,46.05L4.41,48.03C3.48,48.49 2.9,49.42 2.9,50.47C2.9,51.4 3.48,52.45 4.41,52.91C5.22,53.38 6.38,53.38 7.19,52.79L10.44,50.82C12.06,53.26 14.03,55.59 16.35,57.45L14.15,61.28C13.34,62.56 13.8,64.31 15.19,65.12C16.46,65.94 18.2,65.47 19.02,64.07L20.99,60.59C24.23,62.33 27.83,63.49 31.54,63.84L31.54,66.87C31.65,68.38 32.81,69.54 34.32,69.54C35.83,69.54 36.99,68.38 37.1,66.87L37.1,63.84C40.93,63.61 44.64,62.45 48,60.7L49.97,64.07C50.79,65.47 52.41,65.94 53.8,65.12C55.19,64.31 55.66,62.68 54.84,61.28L52.76,57.68C55.08,55.82 57.16,53.61 58.79,51.17L62.03,53.03L62.15,53.03C63.42,53.73 65.05,53.26 65.86,51.98C66.56,50.59 66.21,48.96 64.93,48.14L64.82,48.14L61.45,46.17C62.61,43.49 63.31,40.7 63.54,37.79L66.55,37.79C67.6,37.79 68.53,37.33 69.11,36.4C69.68,35.47 69.68,34.42 69.11,33.49C68.64,32.56 67.6,32.1 66.55,32.1L66.55,32.1L63.54,32.1C63.31,29.07 62.5,26.16 61.34,23.37L64.93,21.28L65.05,21.28C66.44,20.47 66.9,18.84 66.09,17.44C65.28,16.05 63.66,15.58 62.27,16.4L62.15,16.4L58.56,18.49C56.58,15.7 54.27,13.26 51.48,11.28L53.34,8.02C53.92,7.09 54.03,6.05 53.22,5C52.76,4.07 51.83,3.49 50.79,3.49C49.74,3.49 48.82,4.07 48.35,5L48.35,5.12L46.5,8.37Z " /><path id="路径 2" fill-rule="evenodd" style="fill:#4B8AFF" transform="translate(9.081859041864245 9.130977023082998)  rotate(0 25.746737419535428 25.844458517477385)" opacity="1" d="M50.98,30.99C53.41,18.9 47.04,6.8 35.79,2.03C24.54,-2.73 11.44,1.1 4.48,11.22L2.51,14.59C-1.31,22.62 -0.74,32.04 4.02,39.48C8.66,47.04 16.77,51.69 25.7,51.69C37.99,51.69 48.54,43.08 50.98,30.99Z " /><path id="路径 3" fill-rule="evenodd" style="fill:#FFFFFF" transform="translate(16.231337043818787 20.931007339887834)  rotate(0 9.507922551170253 9.536371042170325)" opacity="1" d="M9.51,0C4.29,0 0,4.3 0,9.54C0,14.77 4.29,19.07 9.51,19.07C14.73,19.07 19.02,14.77 19.02,9.54C19.02,4.19 14.73,-0.11 9.51,0Z " /><path id="路径 4" fill-rule="evenodd" style="fill:#B8D1FF" transform="translate(44.05522939452808 30.00323353293416)  rotate(0 4.9879127778533645 5.000257945647169)" opacity="1" d="M0,5C0,7.79 2.21,10 4.99,10C7.77,10 9.98,7.79 9.98,5C9.86,2.21 7.66,0 4.87,0C2.09,0 -0.11,2.21 0,5Z " /><path id="路径 5" fill-rule="evenodd" style="fill:#FFFFFF" transform="translate(30.604156324364784 43.725283279594684)  rotate(0 6.147374873586935 6.150704343911317)" opacity="1" d="M0.47,3.72C-0.46,6.05 0,8.72 1.74,10.47C3.48,12.21 6.15,12.79 8.47,11.86C10.79,10.93 12.29,8.72 12.29,6.16C12.29,4.54 11.6,3.02 10.56,1.86C9.28,0.58 7.77,0 6.15,0C3.72,0 1.4,1.51 0.47,3.72Z " /><path id="分组 1" fill-rule="evenodd" style="fill:#B8D1FF" transform="translate(20.35849696994948 12.32784431137727)  rotate(0 12.140100669288387 20.3160836532512)" opacity="1" d="M22.5423 7.67487C21.6123 7.67487 20.8023 8.37487 20.8023 9.41487C20.8023 10.3449 21.5023 11.1649 22.4223 11.1649C23.4723 11.1649 24.1623 10.3449 24.2823 9.41487C24.2823 8.48487 23.4723 7.67487 22.5423 7.67487Z M0.16 37.794C-0.18 38.604 0.05 39.424 0.63 40.004C1.21 40.584 2.14 40.814 2.83 40.464C3.64 40.124 4.11 39.424 4.11 38.604C4.11 38.024 3.87 37.564 3.53 37.214C3.06 36.634 2.6 36.514 2.02 36.514C1.21 36.514 0.4 36.984 0.16 37.794Z M10.3641 1.4C10.3641 0.58 9.78408 -3.55271e-15 8.97408 -3.55271e-15C8.16408 -3.55271e-15 7.58408 0.58 7.58408 1.4C7.58408 1.74 7.70408 2.09 7.93408 2.33C8.28408 2.67 8.62408 2.79 8.97408 2.79C9.78408 2.79 10.3641 2.09 10.3641 1.4Z " /></g></g></g></g></svg>
+      <p class="logo-t">疫情通</p>
+      <p class="logo-ft">2.0.4.122922 ALPHA</p>
+    </div>
+<!--    <div class="f-line"></div>-->
+    <p class="license-t">"疫情通" 由 Han 开发并开源在 <a style="color: #2A82E4;" href="https://github.com/HanRabbit/EQtong2">Github</a> 上，永久免费，并遵循 <span style="color: #2A82E4">GNU General Public License v3.0</span> 协议，仅用于个人学习，禁止用于商业用途.</p>
+  </div>
+</body>
+<script>
+  const titleBarBox = document.getElementById('titleBarBox')
+  window.onload = () => {
+    titleBarBox.onclick = () => {
+      window.androidDataM.switchAct('exit')
+    }
+  }
+</script>
+</html>

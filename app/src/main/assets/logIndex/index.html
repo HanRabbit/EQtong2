@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        @font-face {
+            src: url("../Ali_font.ttf");
+            font-family: AliFont;
+        }
+        .bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(121, 72, 234, .04);
+            left: 0;
+            top: 0;
+        }
+        .box {
+            /*background-color: rgba(0, 0, 0, .2);*/
+            position: absolute;
+            top: 30%;
+            width: 100%;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .lt {
+            transition: .2s;
+            font-family: AliFont, sans-serif;
+            font-size: 36px;
+            text-align: center;
+            visibility: hidden;
+            transform: scale(0);
+        }
+        .lt.show {
+            visibility: inherit;
+            transform: scale(1);
+        }
+        .btn {
+            transition: .12s;
+            font-family: AliFont, sans-serif;
+            width: 240px;
+            height: 50px;
+            font-size: 18px;
+            margin-top: 60px;
+            color: #FFFFFF;
+            outline: none;
+            border-radius: 10px;
+            border: none;
+            background-color: rgba(121, 72, 234, 1);
+            box-shadow: 0 4px 32px 0 rgba(121, 72, 234, 0.5);
+        }
+        .btn:active {
+            transform: scale(.96);
+            box-shadow: 0 4px 10px 0 rgba(121, 72, 234, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="box">
+        <label id="lt" class="lt">Hello, 你好!</label>
+        <button id="btn" class="btn">你好</button>
+    </div>
+</body>
+<script>
+    const btn = document.getElementById('btn')
+    const lt  = document.getElementById('lt')
+    let isShow = false
+    window.onload = () => {
+        btn.onclick = () => {
+            if (!isShow) {
+                lt.classList.add('show')
+            } else {
+                lt.classList.remove('show')
+            }
+            isShow = !isShow
+        }
+    }
+</script>
+</html>

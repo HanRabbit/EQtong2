@@ -1,0 +1,13 @@
+{
+    "folders": [
+        {
+            "name": "ESP32S3",
+            "path": "C:/Users/Han/Documents/PlatformIO/Projects/ESP32S3"
+        }
+    ],
+    "settings": {
+        "files.associations": {
+            "tft_espi_rp2040.c": "cpp"
+        }
+    }
+}

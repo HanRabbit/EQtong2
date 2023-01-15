@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <style>
+        @font-face {
+            src: url("../../Ali_font.ttf");
+            font-family: AliFont;
+            font-weight: 400;
+            font-style: normal;
+        }
+        html {
+            font-family: AliFont, sans-serif;
+            font-size: 14pt;
+            padding-left: 0;
+            padding-right: 0;
+            cursor: default;
+            /*max-width: 500px;*/
+            margin: 0 auto;
+            /* overflow-x: hidden; */
+        }
+        p {
+            color: #000;
+        }
+        button {
+            font-family: AliFont, sans-serif;
+            font-size: 16pt;
+        }
+        label {
+            font-family: AliFont, sans-serif;
+        }
+        .bg {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #F7F7F7;
+            z-index: -1;
+        }
+        .title-bar-box {
+            /*transition: .04s;*/
+            transition-delay: .06s;
+            /*max-width: 500px;*/
+            position: fixed;
+            /*margin-left: fill;*/
+            left: 0;
+            top: 0;
+            width: 100%;
+            /*right: 20px;*/
+            height: 34pt;
+            padding-top: 30pt;
+            background-color: rgba(247, 247, 247, .8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            z-index: 1;
+        }
+        .title-bar-svg {
+            transition: .08s;
+            margin-left: 10px;
+            width: 24pt;
+            height: 28pt;
+            /*background-color: #2A82E4;*/
+            border-radius: 6px;
+        }
+        .title-bar-svg:active {
+            transform: scale(.9);
+            background-color: rgba(220, 220, 220, .7);
+        }
+        .title-bar-btn-box {
+            position: fixed;
+            right: 0;
+            width: 46pt;
+            background-color: transparent;
+            height: 32px;
+        }
+        .title-bar-btn {
+            position: absolute;
+            transition: .1s;
+            color: #2A82E4;
+            outline: none;
+            border: none;
+            border-radius: 6px;
+            background-color: transparent;
+            float: right;
+        }
+        .title-bar-btn:active {
+            transform: scale(.92);
+            background-color: rgba(128, 128, 128, .1);
+        }
+        .svg-logo {
+            position: fixed;
+            width: 100%;
+            top: 14%;
+            height: 88px;
+        }
+        .login-box {
+            margin-top: 16px;
+            /*background-color: #2A82E4;*/
+            position: fixed;
+            left: 0;
+            top: 24%;
+            width: 100%;
+            text-align: center;
+        }
+        .login-t {
+            width: 100%;
+            font-size: 24px;
+        }
+        .login-in-box {
+            display: flex;
+            flex-direction: column;
+            margin-top: 40px;
+            margin-left: 0;
+            justify-content: center;
+            align-items: center;
+            /*background-color: #2A82E4;*/
+            width: 100%;
+        }
+        .login-input {
+            font-family: AliFont, sans-serif;
+            transition: .2s;
+            font-size: 18px;
+            margin-bottom: 20px;
+            width: 80%;
+            height: 50px;
+            border-radius: 8px;
+            text-indent: 20px;
+            background-color: #FFFFFF;
+            border: #2A82E400 2px solid;
+            outline: none;
+            letter-spacing: 2px;
+        }
+        .login-input::-webkit-input-placeholder {
+            color: #808080;
+        }
+        .login-input:focus {
+            border: #2A82E4 2px solid;
+            /*background-color: #2A82E41F;*/
+            box-shadow: 0px 7px 29px 0px rgba(42, 130, 228, 0.2);
+            /*transform: scale(1.02);*/
+        }
+        .pwd-box {
+            width: 100%;
+        }
+        .show-pwd {
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            float: right;
+            right: 12%;
+            margin-top: 16px;
+            fill: #808080;
+        }
+        .forget-pwd {
+            font-size: 16px;
+            /*float: right;*/
+            width: 100%;
+            text-align: right;
+            padding-right: 24%;
+            color: #808080;
+        }
+        .login-btn-box {
+            position: fixed;
+            float: bottom;
+            bottom: 4%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            /*background-color: #2A82E4;*/
+        }
+        .login-btn {
+            transition: .08s;
+            /*margin-bottom: 120px;*/
+            width: 80%;
+            height: 50px;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            background-color: #2A82E4;
+            color: #FFFFFF;
+            border-radius: 50px;
+            box-shadow: 0 7px 40px 0 rgba(42, 130, 228, 0.3);
+        }
+        .login-btn:active {
+            transform: scale(.98) translateY(4px);
+            /*background-color: rgba(42, 130, 228, 0.8);*/
+            box-shadow: 0 0 10px 2px rgba(42, 130, 228, 0.3);
+        }
+        .login-btn.switch-to-pb {
+            transition: .24s;
+            width: 100%;
+            transform: scale(1) translateY(4px);
+            background-color: #FFFFFF;
+            box-shadow: 0 7px 40px 0 rgba(42, 130, 228, 0);
+            height: 3px;
+            margin-bottom: 30px;
+            color: transparent;
+        }
+        .pb-box {
+            width: 100%;
+            z-index: 1;
+        }
+        .pb {
+            transition: 5s;
+            background-color: #2A82E4;
+            width: 0;
+            height: 3px;
+            margin-bottom: 140px;
+            margin-top: -29px;
+        }
+        .pb.run {
+            width: 100%;
+            /*background-color: #FFFFFF;*/
+            /*background-color: #4AD574;*/
+        }
+        .register-btn:active {
+            transform: scale(.96);
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.06);
+        }
+        .other-login-box {
+            /*display: flex;*/
+            /*flex-direction: column;*/
+            /*align-items: center;*/
+            /*background-color: #2A82E4;*/
+            position: fixed;
+            width: 100%;
+            height: 40px;
+            bottom: 60px;
+        }
+        .other-line {
+            margin: 0 auto;
+            width: 60%;
+            height: 1px;
+            background-color: #A6A6A6;
+        }
+        .other-login-t {
+            font-size: 14px;
+            color: #A6A6A6;
+            position: absolute;
+            background-color: #F7F7F7;
+            top: -10px;
+            width: 120px;
+            text-align: center;
+            /*min-width: 120px;*/
+            right: calc(50% - 60px);
+            /*left: 38%;*/
+        }
+        .other-btn-box {
+            /*margin-top: 10px;*/
+            width: 100%;
+            display: flex;
+            margin-top: -10px;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: center;
+        }
+        .other-btn {
+            width: 120pt;
+            height: 120pt;
+        }
+        .msg-frame {
+            font-family: AliFont, sans-serif;
+            /*background-color: #FFFFFF;*/
+            color: #e74c3c;
+            height: 30px;
+            width: 60%;
+            margin-bottom: -24px;
+            margin-left: -22%;
+            /*text-align: center;*/
+            /*margin: 0 auto;*/
+            /*display: flex;*/
+            /*justify-content: center;*/
+            /*align-items: center;*/
+
+        }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="title-bar-box" id="titleBarBox">
+        <svg t="1672297696470" class="title-bar-svg" id="backBtn" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2842" width="64" height="64"><path d="M631.04 161.941333a42.666667 42.666667 0 0 1 63.061333 57.386667l-2.474666 2.730667-289.962667 292.245333 289.706667 287.402667a42.666667 42.666667 0 0 1 2.730666 57.6l-2.474666 2.752a42.666667 42.666667 0 0 1-57.6 2.709333l-2.752-2.474667-320-317.44a42.666667 42.666667 0 0 1-2.709334-57.6l2.474667-2.752 320-322.56z" fill="#515151" p-id="2843"></path></svg>
+<!--        <label style="font-size: 22px; color: #515151"></label>-->
+        <div class="title-bar-btn-box">
+            <button class="title-bar-btn" id="selectBoxBtn">注册</button>
+        </div>
+    </div>
+    <svg class="svg-logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="108" height="108" viewBox="0 0 108 108" fill="none"><defs><path id="path_0" transform="translate(0 0) rotate(0 54 54)" d="M12,108L96,108C102.63,108 108,102.63 108,96L108,12C108,5.37 102.63,0 96,0L12,0C5.37,0 0,5.37 0,12L0,96C0,102.63 5.37,108 12,108Z" /><linearGradient id="linear_0" x1="0%" y1="50%" x2="105.779%" y2="50%" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#000000" stop-opacity="0.135" /><stop offset="1" stop-color="#000000" stop-opacity="0" /></linearGradient><rect id="path_1" x="0" y="0" width="69.54" height="69.54" /></defs><g opacity="1" transform="translate(0 0)  rotate(0 54 54)"><mask id="mask-0" fill="white"><use xlink:href="#path_0"></use></mask><g mask="url(#mask-0)"><path id="矩形 1" fill-rule="evenodd" style="fill:#FFFFFF" transform="translate(0 0)  rotate(0 54 54)" opacity="1" d="M12,108L96,108C102.63,108 108,102.63 108,96L108,12C108,5.37 102.63,0 96,0L12,0C5.37,0 0,5.37 0,12L0,96C0,102.63 5.37,108 12,108Z " /></g><g mask="url(#mask-0)"><path id="矩形 1" fill-rule="evenodd" fill="url(#linear_0)" transform="translate(47.51328151719255 44.118275879353575)  rotate(31.4569180549785 46.31061631716162 33.42659644711733)" opacity="1" d="M0,66.85L92.62,66.85L92.62,0L0,0L0,66.85Z " /></g><g mask="url(#mask-0)"><g opacity="1" transform="translate(19.2 19.199999999999996)  rotate(0 34.77 34.77)"><mask id="bg-mask-1" fill="white"><use xlink:href="#path_1"></use></mask><g mask="url(#bg-mask-1)" ><path id="路径 1" fill-rule="evenodd" style="fill:#4B8AFF" transform="translate(0 0)  rotate(0 34.77 34.77)" opacity="1" d="M46.5,8.37C43.6,7.09 40.35,6.16 37.11,5.93L37.11,2.79C37.11,1.28 35.83,0 34.32,0C32.82,0 31.54,1.28 31.54,2.79L31.54,5.93C28.53,6.28 25.51,7.09 22.73,8.37L20.87,5.12C20.41,4.19 19.48,3.6 18.44,3.6C17.51,3.6 16.47,4.19 16,5.12C15.54,6.05 15.54,7.21 16.12,8.02L18.09,11.4C15.42,13.26 12.99,15.7 11.13,18.37L8,16.51C7.07,15.93 6.03,15.93 5.1,16.4C4.17,16.86 3.59,17.79 3.59,18.84C3.59,19.89 4.17,20.82 5.1,21.28L8.23,23.14C6.96,25.93 6.15,28.96 5.8,32.1L2.67,32.1C1.16,32.1 0,33.37 0,34.89C0,36.4 1.16,37.68 2.67,37.79L5.91,37.79C6.15,40.7 6.84,43.38 7.88,46.05L4.41,48.03C3.48,48.49 2.9,49.42 2.9,50.47C2.9,51.4 3.48,52.45 4.41,52.91C5.22,53.38 6.38,53.38 7.19,52.79L10.44,50.82C12.06,53.26 14.03,55.59 16.35,57.45L14.15,61.28C13.34,62.56 13.8,64.31 15.19,65.12C16.46,65.94 18.2,65.47 19.02,64.07L20.99,60.59C24.23,62.33 27.83,63.49 31.54,63.84L31.54,66.87C31.65,68.38 32.81,69.54 34.32,69.54C35.83,69.54 36.99,68.38 37.1,66.87L37.1,63.84C40.93,63.61 44.64,62.45 48,60.7L49.97,64.07C50.79,65.47 52.41,65.94 53.8,65.12C55.19,64.31 55.66,62.68 54.84,61.28L52.76,57.68C55.08,55.82 57.16,53.61 58.79,51.17L62.03,53.03L62.15,53.03C63.42,53.73 65.05,53.26 65.86,51.98C66.56,50.59 66.21,48.96 64.93,48.14L64.82,48.14L61.45,46.17C62.61,43.49 63.31,40.7 63.54,37.79L66.55,37.79C67.6,37.79 68.53,37.33 69.11,36.4C69.68,35.47 69.68,34.42 69.11,33.49C68.64,32.56 67.6,32.1 66.55,32.1L66.55,32.1L63.54,32.1C63.31,29.07 62.5,26.16 61.34,23.37L64.93,21.28L65.05,21.28C66.44,20.47 66.9,18.84 66.09,17.44C65.28,16.05 63.66,15.58 62.27,16.4L62.15,16.4L58.56,18.49C56.58,15.7 54.27,13.26 51.48,11.28L53.34,8.02C53.92,7.09 54.03,6.05 53.22,5C52.76,4.07 51.83,3.49 50.79,3.49C49.74,3.49 48.82,4.07 48.35,5L48.35,5.12L46.5,8.37Z " /><path id="路径 2" fill-rule="evenodd" style="fill:#4B8AFF" transform="translate(9.081859041864245 9.130977023082998)  rotate(0 25.746737419535428 25.844458517477385)" opacity="1" d="M50.98,30.99C53.41,18.9 47.04,6.8 35.79,2.03C24.54,-2.73 11.44,1.1 4.48,11.22L2.51,14.59C-1.31,22.62 -0.74,32.04 4.02,39.48C8.66,47.04 16.77,51.69 25.7,51.69C37.99,51.69 48.54,43.08 50.98,30.99Z " /><path id="路径 3" fill-rule="evenodd" style="fill:#FFFFFF" transform="translate(16.231337043818787 20.931007339887834)  rotate(0 9.507922551170253 9.536371042170325)" opacity="1" d="M9.51,0C4.29,0 0,4.3 0,9.54C0,14.77 4.29,19.07 9.51,19.07C14.73,19.07 19.02,14.77 19.02,9.54C19.02,4.19 14.73,-0.11 9.51,0Z " /><path id="路径 4" fill-rule="evenodd" style="fill:#B8D1FF" transform="translate(44.05522939452808 30.00323353293416)  rotate(0 4.9879127778533645 5.000257945647169)" opacity="1" d="M0,5C0,7.79 2.21,10 4.99,10C7.77,10 9.98,7.79 9.98,5C9.86,2.21 7.66,0 4.87,0C2.09,0 -0.11,2.21 0,5Z " /><path id="路径 5" fill-rule="evenodd" style="fill:#FFFFFF" transform="translate(30.604156324364784 43.725283279594684)  rotate(0 6.147374873586935 6.150704343911317)" opacity="1" d="M0.47,3.72C-0.46,6.05 0,8.72 1.74,10.47C3.48,12.21 6.15,12.79 8.47,11.86C10.79,10.93 12.29,8.72 12.29,6.16C12.29,4.54 11.6,3.02 10.56,1.86C9.28,0.58 7.77,0 6.15,0C3.72,0 1.4,1.51 0.47,3.72Z " /><path id="分组 1" fill-rule="evenodd" style="fill:#B8D1FF" transform="translate(20.35849696994948 12.32784431137727)  rotate(0 12.140100669288387 20.3160836532512)" opacity="1" d="M22.5423 7.67487C21.6123 7.67487 20.8023 8.37487 20.8023 9.41487C20.8023 10.3449 21.5023 11.1649 22.4223 11.1649C23.4723 11.1649 24.1623 10.3449 24.2823 9.41487C24.2823 8.48487 23.4723 7.67487 22.5423 7.67487Z M0.16 37.794C-0.18 38.604 0.05 39.424 0.63 40.004C1.21 40.584 2.14 40.814 2.83 40.464C3.64 40.124 4.11 39.424 4.11 38.604C4.11 38.024 3.87 37.564 3.53 37.214C3.06 36.634 2.6 36.514 2.02 36.514C1.21 36.514 0.4 36.984 0.16 37.794Z M10.3641 1.4C10.3641 0.58 9.78408 -3.55271e-15 8.97408 -3.55271e-15C8.16408 -3.55271e-15 7.58408 0.58 7.58408 1.4C7.58408 1.74 7.70408 2.09 7.93408 2.33C8.28408 2.67 8.62408 2.79 8.97408 2.79C9.78408 2.79 10.3641 2.09 10.3641 1.4Z " /></g></g></g></g></svg>
+    <div class="login-box">
+        <label class="login-t">欢迎登录 <span style="color: #2A82E4">疫情通</span></label>
+        <form id="userDataForm" target="frame" method="post">
+            <div class="login-in-box">
+                <input id="inputName" name="name" class="login-input" placeholder="用户名 / 邮箱" />
+                <div class="pwd-box">
+                    <input class="login-input" id="inputPwd" type="password" placeholder="密码">
+                    <input type="hidden" name="password" id="hPwd">
+                    <svg t="1673578482935" class="show-pwd" id="pwdShowIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3232"><path d="M512 608a96 96 0 1 1 0-192 96 96 0 0 1 0 192m0-256c-88.224 0-160 71.776-160 160s71.776 160 160 160 160-71.776 160-160-71.776-160-160-160" p-id="3233"></path><path d="M512 800c-212.064 0-384-256-384-288s171.936-288 384-288 384 256 384 288-171.936 288-384 288m0-640C265.248 160 64 443.008 64 512c0 68.992 201.248 352 448 352s448-283.008 448-352c0-68.992-201.248-352-448-352" p-id="3234"></path></svg>
+                    <svg t="1673578879689" class="show-pwd" id="pwdHideIcon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3387"><path d="M512 800c-66.112 0-128.32-24.896-182.656-60.096l94.976-94.976A156.256 156.256 0 0 0 512 672c88.224 0 160-71.776 160-160a156.256 156.256 0 0 0-27.072-87.68l101.536-101.536C837.28 398.624 896 493.344 896 512c0 32-171.936 288-384 288m96-288a96 96 0 0 1-96 96c-14.784 0-28.64-3.616-41.088-9.664l127.424-127.424c6.048 12.448 9.664 26.304 9.664 41.088M128 512c0-32 171.936-288 384-288 66.112 0 128.32 24.896 182.656 60.096L277.536 701.216C186.72 625.376 128 530.656 128 512m664.064-234.816l91.328-91.328-45.248-45.248-97.632 97.632C673.472 192.704 595.456 160 512 160 265.248 160 64 443.008 64 512c0 39.392 65.728 148.416 167.936 234.816l-91.328 91.328 45.248 45.248 97.632-97.632C350.528 831.296 428.544 864 512 864c246.752 0 448-283.008 448-352 0-39.392-65.728-148.416-167.936-234.816" p-id="3388"></path><path d="M512 352c-88.224 0-160 71.776-160 160 0 15.328 2.848 29.856 6.88 43.872l58.592-58.592a95.616 95.616 0 0 1 79.808-79.808l58.592-58.592A157.76 157.76 0 0 0 512 352" p-id="3389"></path></svg>
+                </div>
+                <iframe class="msg-frame" src="" frameborder="0" name="frame"></iframe>
+                <label class="forget-pwd">忘记密码?</label>
+            </div>
+        </form>
+            <div class="login-btn-box">
+                <button id="loginBtn" class="login-btn">登录</button>
+                <div class="pb-box">
+                    <div class="pb" id="Pb"></div>
+                </div>
+            </div>
+<!--            <button class="register-btn">注册</button>-->
+        </div>
+        <div class="other-login-box">
+            <div class="other-login-t-box">
+                <div class="other-line"></div>
+                <label class="other-login-t">其他登录方式</label>
+            </div>
+            <div class="other-btn-box">
+                <svg class="other-btn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="144" height="144" viewBox="0 0 144 144" fill="none"><defs><filter id="filter_2" x="-48.72" y="-48.72" width="141.44" height="141.44" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+                    <feOffset dx="0" dy="16.24"/>
+                    <feGaussianBlur stdDeviation="24.36"/>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0.21568627450980393 0 0 0 0 0.24313725490196078 0 0 0 0 0.49019607843137253 0 0 0 0.05 0"/>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_Shadow"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_Shadow" result="shape"/></filter></defs><g opacity="1" transform="translate(49.531982421875 33.2919921875)  rotate(0 22 22)"><g id="Ellipse 3" filter="url(#filter_2)"><path id="Ellipse 3" fill-rule="evenodd" style="fill:#FFFFFF" transform="translate(0 0)  rotate(0 22 22)" opacity="0.8" d="M0 22C0 9.85 9.85 0 22 0C34.15 0 44 9.85 44 22C44 34.15 34.15 44 22 44C9.85 44 0 34.15 0 22Z" /><path id="Ellipse 3" style="stroke:rgba(0,0,0,0.05); stroke-width:1.6239999999999999; stroke-opacity:50; stroke-dasharray:0 0" transform="translate(0 0)  rotate(0 22 22)" d="M44,22Z M22,0C9.85,0 0,9.85 0,22C0,34.15 9.85,44 22,44C34.15,44 44,34.15 44,22C44,9.85 34.15,0 22,0Z " /></g><g opacity="1" transform="translate(9.777777777777777 9.777777777777777)  rotate(0 12.222222222222221 12.222222222222221)"><path id="矩形" fill-rule="evenodd" style="fill:#000000" transform="translate(0 0)  rotate(0 12.222222222222221 12.222222222222221)" opacity="0" d="M24.44 24.44L0 24.44L0 0L24.44 0L24.44 24.44Z" /><path id="路径" fill-rule="evenodd" style="fill:#6AA9FF" transform="translate(4.074074039067375 3.25925925925926)  rotate(0 8.148139865455384 9.370366019821274)" opacity="1" d="M8.15 0C12.45 0 14.32 3.52 14.22 7.87C14.9 9.52 15.35 10.54 15.73 11.74C16.56 14.3 16.29 15.36 16.09 15.39C15.65 15.44 14.39 13.46 14.39 13.46C14.39 14.61 13.78 16.1 12.46 17.18C13.09 17.37 14.53 17.89 14.19 18.44C13.91 18.9 9.44 18.73 8.15 18.59C6.86 18.73 2.38 18.9 2.11 18.44C1.76 17.88 3.2 17.37 3.84 17.18C2.52 16.1 1.91 14.61 1.91 13.46C1.91 13.46 0.64 15.44 0.21 15.39C0.01 15.37 -0.26 14.31 0.56 11.74C0.95 10.53 1.39 9.53 2.08 7.87C1.96 3.59 3.79 0 8.15 0Z" /></g></g></svg>
+                <svg class="other-btn" style="margin-left: -40px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="144" height="144" viewBox="0 0 144 144" fill="none"><defs><filter id="filter_2" x="-48.69" y="-48.69" width="141.38" height="141.38" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+                    <feOffset dx="0" dy="16.23"/>
+                    <feGaussianBlur stdDeviation="24.345"/>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0.21568627450980393 0 0 0 0 0.24313725490196078 0 0 0 0 0.49019607843137253 0 0 0 0.05 0"/>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_Shadow"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_Shadow" result="shape"/></filter></defs><g opacity="1" transform="translate(49.50146484375 33.27142333984375)  rotate(0 22 22)"><g id="Ellipse 3" filter="url(#filter_2)"><path id="Ellipse 3" fill-rule="evenodd" style="fill:#FFFFFF" transform="translate(0 0)  rotate(0 22 22)" opacity="0.8" d="M0 22C0 9.85 9.85 0 22 0C34.15 0 44 9.85 44 22C44 34.15 34.15 44 22 44C9.85 44 0 34.15 0 22Z" /><path id="Ellipse 3" style="stroke:rgba(0,0,0,0.05); stroke-width:1.6228799999999999; stroke-opacity:50; stroke-dasharray:0 0" transform="translate(0 0)  rotate(0 22 22)" d="M44,22Z M22,0C9.85,0 0,9.85 0,22C0,34.15 9.85,44 22,44C34.15,44 44,34.15 44,22C44,9.85 34.15,0 22,0Z " /></g><g opacity="1" transform="translate(9.777777777777775 9.777777777777775)  rotate(0 12.222222222222218 12.222222222222218)"><path id="矩形" fill-rule="evenodd" style="fill:#000000" transform="translate(0 0)  rotate(0 12.222222222222218 12.222222222222218)" opacity="0" d="M24.44 24.44L0 24.44L0 0L24.44 0L24.44 24.44Z" /><path id="形状" fill-rule="evenodd" style="fill:#4AD574" transform="translate(1.6296296296296293 3.2592592592592586)  rotate(0 10.592592592592588 8.555555555555554)" opacity="1" d="M15.06 5.21994C14.41 2.22994 11.18 -5.98342e-05 7.49996 -5.98342e-05C3.37996 -5.98342e-05 -4.27387e-05 2.78994 -4.27387e-05 6.31994C-4.27387e-05 8.35994 1.11996 10.0399 2.99996 11.3399L2.24996 13.5799L4.86996 12.2799C5.80996 12.4599 6.55996 12.6499 7.49996 12.6499C7.72996 12.6499 7.96996 12.6399 8.19996 12.6199C8.04996 12.1199 7.96996 11.5999 7.96996 11.0599C7.96996 7.80994 10.78 5.17994 14.34 5.17994C14.58 5.17994 14.83 5.19994 15.06 5.21994Z M9.18435 4.09098C9.18435 4.65098 9.74435 5.02098 10.3143 5.02098C10.8743 5.02098 11.2443 4.65098 11.2443 4.09098C11.2443 3.53098 10.8743 3.16098 10.3143 3.16098C9.74435 3.16098 9.18435 3.53098 9.18435 4.09098Z M6.00312 4.09098C6.00312 3.53098 5.62312 3.16098 5.06312 3.16098C4.50312 3.16098 3.93312 3.53098 3.93312 4.09098C3.93312 4.65098 4.50312 5.02098 5.06312 5.02098C5.62312 5.02098 6.00312 4.65098 6.00312 4.09098Z M14.819 5.57642C11.249 5.57642 8.43904 7.99642 8.43904 10.9764C8.43904 13.9464 11.249 16.3664 14.819 16.3664C15.559 16.3664 16.319 16.1764 17.069 15.9964L19.119 17.1064L18.559 15.2564C20.059 14.1364 21.189 12.6464 21.189 10.9764C21.189 7.99642 18.189 5.57642 14.819 5.57642Z M13.6886 9.29438C13.6886 8.92438 13.3186 8.55438 12.7486 8.55438C12.3786 8.55438 11.9986 8.92438 11.9986 9.29438C11.9986 9.67438 12.3786 10.0444 12.7486 10.0444C13.3186 10.0444 13.6886 9.67438 13.6886 9.29438Z M17.8078 9.29438C17.8078 8.92438 17.4378 8.55438 16.8678 8.55438C16.4978 8.55438 16.1278 8.92438 16.1278 9.29438C16.1278 9.67438 16.4978 10.0444 16.8678 10.0444C17.4378 10.0444 17.8078 9.67438 17.8078 9.29438Z " /></g></g></svg>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./style.js"></script>
+<script src="sha1.js"></script>
+<script src="./web.js"></script>
+</html>
